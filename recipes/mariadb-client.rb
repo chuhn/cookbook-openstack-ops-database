@@ -22,6 +22,10 @@ include_recipe 'mariadb::client'
 mysql2_chef_gem_mariadb 'default' do
   gem_version '0.4.9'
   action :install
+  not_if do
+    node['chef_packages']['chef']['chef_root'] ==
+      '/usr/lib/ruby/vendor_ruby'
+  end
 end
 
 node['openstack']['db']['python_packages']['mariadb'].each do |pkg|
